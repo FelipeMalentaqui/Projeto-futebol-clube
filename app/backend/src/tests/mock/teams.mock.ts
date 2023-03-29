@@ -65,14 +65,5 @@ const teams = [
   }
 ]
 
-const teams1 =
-  {
-    "id": 12,
-    "teamName": "Palmeiras"
-  }
-
-export {
-  teams,
-  teams1,
-}
+export default teams;
 
