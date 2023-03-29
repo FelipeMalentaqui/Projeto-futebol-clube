@@ -7,13 +7,13 @@ const getAll = async (req: Request, res: Response) => {
   return res.status(200).json(teams);
 };
 
-// const getById = async (req: Request, res: Response) => {
-//   const { id } = req.body;
-//   const teams = await teamsService.getById(id);
+const getById = async (req: Request, res: Response) => {
+  const { id } = req.params;
+  const teamsId = await teamsService.getById(id);
 
-//   return res.status(200).json(teams);
-// };
+  return res.status(200).json(teamsId);
+};
 
-const userController = { getAll };
+const userController = { getAll, getById };
 
 export default userController;
