@@ -75,7 +75,7 @@ describe('Verifica se retorna todos os teams', () => {
 describe('Verifica se retorna um time', () => {
   it('Retorna um time especifico pelo id', async () => {
     before(async () => {
-      sinon.stub(teamsModel, 'findOne').resolves(teams as teamsModel[]);
+      sinon.stub(teamsModel, 'findOne').resolves(teams1 as teamsModel);
     });
       const response = await chai.request(app).get('/teams/12');
       

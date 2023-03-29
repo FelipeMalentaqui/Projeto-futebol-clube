@@ -65,12 +65,11 @@ const teams = [
   }
 ]
 
-const teams1 = [
+const teams1 =
   {
     "id": 12,
     "teamName": "Palmeiras"
-  },
-]
+  }
 
 export {
   teams,
