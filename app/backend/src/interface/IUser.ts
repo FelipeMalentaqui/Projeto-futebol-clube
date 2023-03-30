@@ -3,4 +3,9 @@ interface IUser {
   password: string;
 }
 
+export interface Token {
+  email: string;
+  id: number;
+}
+
 export default IUser;

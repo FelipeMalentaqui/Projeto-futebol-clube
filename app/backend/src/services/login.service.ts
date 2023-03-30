@@ -7,17 +7,33 @@ const login = async (email: string, password: string) => {
     where: { email },
   });
 
-  console.log(loginUsers, 'loginUsers');
+  // console.log(loginUsers, 'loginUsers');
 
   if (!loginUsers || !bcrypt.compareSync(password, loginUsers.password)) {
     return { type: 'INVALID', message: 'Invalid email or password' };
   }
 
-  const token = createToken({ email, password });
+  const token = createToken({ email, id: loginUsers.id });
 
   return { type: '', message: { token } };
 };
 
-const userLogin = { login };
+const getById = async (id: number) => {
+  const users = await userModel.findOne({
+    where: { id },
+  });
+
+  if (!users) return { type: 'ERRO_USER', message: 'Erro user' };
+
+  return { type: null, message: users };
+};
+
+const getAll = async () => {
+  const users = await userModel.findAll();
+
+  return users;
+};
+
+const userLogin = { login, getById, getAll };
 
 export default userLogin;
