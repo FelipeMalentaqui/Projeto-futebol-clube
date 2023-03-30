@@ -7,11 +7,14 @@ const validateLogin = (req: Request, res: Response, next: NextFunction) => {
 
   if (!password) return res.status(400).json({ message: 'All fields must be filled' });
 
-  if (password.length < 6) return res.status(400).json({ message: 'Password invalid' });
+  if (password.length < 6) return res.status(401).json({ message: 'Invalid email or password' });
 
   // const validaEmail = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+\.([a-z]+)?$/i;
+  const validaEmail = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/;
+  const emailValid = validaEmail.test(email);
+  console.log(emailValid);
 
-  // if (email !== validaEmail) return res.status(400).json({ message: 'Email invalid' });
+  if (!emailValid) return res.status(401).json({ message: 'Invalid email or password' });
 
   next();
 };
