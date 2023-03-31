@@ -21,12 +21,12 @@ const getById = async (req: Request, res: Response) => {
   return res.status(200).json(message);
 };
 
-const getAll = async (req: Request, res: Response) => {
-  const users = await loginService.getAll();
+// const getAll = async (req: Request, res: Response) => {
+//   const users = await loginService.getAll();
 
-  return res.status(200).json(users);
-};
+//   return res.status(200).json(users);
+// };
 
-const userLogin = { login, getById, getAll };
+const userLogin = { login, getById };
 
 export default userLogin;

@@ -28,12 +28,12 @@ const getById = async (id: number) => {
   return { type: null, message: users };
 };
 
-const getAll = async () => {
-  const users = await userModel.findAll();
+// const getAll = async () => {
+//   const users = await userModel.findAll();
 
-  return users;
-};
+//   return users;
+// };
 
-const userLogin = { login, getById, getAll };
+const userLogin = { login, getById };
 
 export default userLogin;
