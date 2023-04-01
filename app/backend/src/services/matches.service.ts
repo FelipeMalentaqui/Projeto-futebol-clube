@@ -8,6 +8,16 @@ const getAll = async () => {
   return matches;
 };
 
-const userService = { getAll };
+const gameInProgress = async (inProgress: boolean) => {
+  if (inProgress) {
+    const games = await MatchesModel.findAll({
+      where: { inProgress },
+      include: ['homeTeam', 'awayTeam'],
+    });
+    return games;
+  }
+};
+
+const userService = { getAll, gameInProgress };
 
 export default userService;
