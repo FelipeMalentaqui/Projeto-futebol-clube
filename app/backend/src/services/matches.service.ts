@@ -1,7 +1,9 @@
 import MatchesModel from '../database/models/Matches';
 
 const getAll = async () => {
-  const matches = await MatchesModel.findAll();
+  const matches = await MatchesModel.findAll({
+    include: ['homeTeam', 'awayTeam'],
+  });
 
   return matches;
 };

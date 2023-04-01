@@ -7,8 +7,6 @@ const getAll = async () => {
 };
 
 const getById = async (id: string) => {
-  console.log(id, 'iddddd');
-
   const teamsId = await teamsModel.findOne({
     where: { id },
   });
