@@ -116,8 +116,13 @@ describe('validando a rota GET(/login/role)', () => {
   afterEach(() => sinon.restore());
 
   describe('se não encontrar um usuario com o id valido', () => {
-    it('devera retornar um erro', () => {
-      
+    it('devera retornar um erro', async () => {
+
+      sinon.stub(Model, 'findOne').resolves(null);
+      const httpResponse = await chai.request(app).get('/login/role');
+
+      expect(httpResponse.status).to.be.equal(401);
+      expect(httpResponse.body).to.be.deep.equal({ message: 'Erro user' });
     });
   });
 });
