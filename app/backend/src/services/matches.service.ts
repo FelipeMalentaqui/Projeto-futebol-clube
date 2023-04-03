@@ -1,6 +1,9 @@
 // import IGames from '../interface/IGames';
 import MatchesModel from '../database/models/Matches';
 
+const msg = 'It is not possible to create a match with two equal teams';
+const msg2 = 'There is no team with such id!';
+
 const gameInProgress = async (inProgress: string) => {
   console.log(inProgress, 'Progress');
   const result = inProgress === 'true';
@@ -47,24 +50,33 @@ const updatedGame = async (id: string, homeTeamGoals: string, awayTeamGoals: str
   return updatedGoals;
 };
 
+// const verifyTeam = async (paran: string) => {
+//   const team1 = await MatchesModel.findByPk(paran);
+
+//   if (!team1) return { type: 'TIME_NOT', message: msg2 };
+// };
+
 const createGame = async (
   homeTeamId: string,
   awayTeamId: string,
   homeTeamGoals: string,
   awayTeamGoals: string,
 ) => {
-  const msg = 'It is not possible to create a match with two equal teams';
+  if (homeTeamId === awayTeamId) return { type: 'teamsError', message: msg };
+
+  // verifyTeam(homeTeamId);
+  const team1 = await MatchesModel.findOne({ where: { homeTeamId } });
+  const team2 = await MatchesModel.findOne({ where: { awayTeamId } });
+
+  if (!team1 || !team2) return { type: 'teamNot', message: msg2 };
+
   const newGame = await MatchesModel.create({
     homeTeamId,
     awayTeamId,
     homeTeamGoals,
     awayTeamGoals,
     inProgress: true,
-  }, {
-    // include: ['homeTeam', 'awayTeam'],
   });
-
-  if (homeTeamId === awayTeamId) return { type: 'TEAMS_ERROR', message: msg };
 
   return { type: null, message: newGame };
 };
