@@ -35,6 +35,17 @@ const finish = async (id: string) => {
   return game;
 };
 
-const userService = { getAll, gameInProgress, finish };
+const updatedGame = async (id: string, homeTeamGoals: string, awayTeamGoals: string) => {
+  const updatedGoals = await MatchesModel.update({
+    homeTeamGoals,
+    awayTeamGoals,
+  }, {
+    where: { id },
+  });
+
+  return updatedGoals;
+};
+
+const userService = { getAll, gameInProgress, finish, updatedGame };
 
 export default userService;

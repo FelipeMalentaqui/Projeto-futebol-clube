@@ -7,4 +7,6 @@ const router = Router();
 router.get('/', matchesController.getAll);
 // router.get('/inProgress', matchesController.gameInProgress);
 router.patch('/:id/finish', validateJWT, matchesController.finish);
+
+router.patch('/:id', validateJWT, matchesController.updatedGame);
 export default router;

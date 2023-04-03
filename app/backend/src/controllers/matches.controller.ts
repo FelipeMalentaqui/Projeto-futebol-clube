@@ -16,10 +16,15 @@ const finish = async (req: Request, res: Response) => {
   return res.status(200).json({ message: 'Finished' });
 };
 
-// const gameInProgress = async (req: Request, res: Response) => {
+const updatedGame = async (req: Request, res: Response) => {
+  const { id } = req.params;
+  const { homeTeamGoals, awayTeamGoals } = req.body;
 
-// };
+  const updateGoals = await matchesService.updatedGame(id, homeTeamGoals, awayTeamGoals);
 
-const userController = { getAll, finish };
+  return res.status(200).json(updateGoals);
+};
+
+const userController = { getAll, finish, updatedGame };
 
 export default userController;
