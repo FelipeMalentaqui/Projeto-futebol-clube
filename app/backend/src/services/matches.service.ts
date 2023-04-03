@@ -1,21 +1,28 @@
 import MatchesModel from '../database/models/Matches';
 
-const getAll = async () => {
+const gameInProgress = async (inProgress: string) => {
+  console.log(inProgress, 'Progress');
+  const result = inProgress === 'true';
+
+  const games = await MatchesModel.findAll({
+    where: { inProgress: result },
+    include: ['homeTeam', 'awayTeam'],
+  });
+  return games;
+};
+
+const getAll = async (inProgress: string) => {
+  if (inProgress) {
+    return gameInProgress(inProgress as string);
+  }
+
+  // const result = inProgress === 'true';
   const matches = await MatchesModel.findAll({
+    // where: { inProgress: result },
     include: ['homeTeam', 'awayTeam'],
   });
 
   return matches;
-};
-
-const gameInProgress = async (inProgress: boolean) => {
-  if (inProgress) {
-    const games = await MatchesModel.findAll({
-      where: { inProgress },
-      include: ['homeTeam', 'awayTeam'],
-    });
-    return games;
-  }
 };
 
 const userService = { getAll, gameInProgress };
