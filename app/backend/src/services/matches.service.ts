@@ -1,3 +1,4 @@
+// import IGames from '../interface/IGames';
 import MatchesModel from '../database/models/Matches';
 
 const gameInProgress = async (inProgress: string) => {
@@ -46,6 +47,28 @@ const updatedGame = async (id: string, homeTeamGoals: string, awayTeamGoals: str
   return updatedGoals;
 };
 
-const userService = { getAll, gameInProgress, finish, updatedGame };
+const createGame = async (
+  homeTeamId: string,
+  awayTeamId: string,
+  homeTeamGoals: string,
+  awayTeamGoals: string,
+) => {
+  const msg = 'It is not possible to create a match with two equal teams';
+  const newGame = await MatchesModel.create({
+    homeTeamId,
+    awayTeamId,
+    homeTeamGoals,
+    awayTeamGoals,
+    inProgress: true,
+  }, {
+    // include: ['homeTeam', 'awayTeam'],
+  });
+
+  if (homeTeamId === awayTeamId) return { type: 'TEAMS_ERROR', message: msg };
+
+  return { type: null, message: newGame };
+};
+
+const userService = { getAll, gameInProgress, finish, updatedGame, createGame };
 
 export default userService;

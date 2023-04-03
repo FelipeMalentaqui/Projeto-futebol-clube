@@ -25,6 +25,22 @@ const updatedGame = async (req: Request, res: Response) => {
   return res.status(200).json(updateGoals);
 };
 
-const userController = { getAll, finish, updatedGame };
+const createGame = async (req: Request, res: Response) => {
+  const { homeTeamId, awayTeamId, homeTeamGoals, awayTeamGoals } = req.body;
+  // const { body } = req.body;
+
+  const { type, message } = await matchesService.createGame(
+    homeTeamId,
+    awayTeamId,
+    homeTeamGoals,
+    awayTeamGoals,
+  );
+
+  if (type) return res.status(422).json(message);
+
+  return res.status(201).json(message);
+};
+
+const userController = { getAll, finish, updatedGame, createGame };
 
 export default userController;
