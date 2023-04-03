@@ -25,6 +25,16 @@ const getAll = async (inProgress: string) => {
   return matches;
 };
 
-const userService = { getAll, gameInProgress };
+const finish = async (id: string) => {
+  const game = await MatchesModel.update({
+    inProgress: false,
+  }, {
+    where: { id },
+  });
+
+  return game;
+};
+
+const userService = { getAll, gameInProgress, finish };
 
 export default userService;

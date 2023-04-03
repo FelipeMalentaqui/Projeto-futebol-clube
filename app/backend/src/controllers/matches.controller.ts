@@ -8,10 +8,18 @@ const getAll = async (req: Request, res: Response) => {
   return res.status(200).json(matches);
 };
 
+const finish = async (req: Request, res: Response) => {
+  const { id } = req.params;
+
+  await matchesService.finish(id);
+
+  return res.status(200).json({ message: 'Finished' });
+};
+
 // const gameInProgress = async (req: Request, res: Response) => {
 
 // };
 
-const userController = { getAll };
+const userController = { getAll, finish };
 
 export default userController;
