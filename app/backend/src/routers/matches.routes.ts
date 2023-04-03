@@ -10,5 +10,5 @@ router.patch('/:id/finish', validateJWT, matchesController.finish);
 
 router.patch('/:id', validateJWT, matchesController.updatedGame);
 
-router.post('/', matchesController.createGame);
+router.post('/', validateJWT, matchesController.createGame);
 export default router;
