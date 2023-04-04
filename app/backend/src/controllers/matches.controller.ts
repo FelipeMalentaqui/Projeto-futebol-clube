@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import matchesService from '../services/matches.service';
-import mapError from '../utils/errorMap';
+// import mapError from '../utils/errorMap';
 
 const getAll = async (req: Request, res: Response) => {
   const { inProgress } = req.query;
@@ -37,11 +37,11 @@ const createGame = async (req: Request, res: Response) => {
     awayTeamGoals,
   );
 
-  // if (type === 'teamsError') return res.status(422).json({ message });
+  if (type === 'teamsError') return res.status(422).json({ message });
 
-  // if (type === 'teamNot') return res.status(404).json({ message });
+  if (type === 'teamNot') return res.status(404).json({ message });
 
-  if (type) return res.status(mapError(type)).json({ message });
+  // if (type) return res.status(mapError(type)).json({ message });
 
   return res.status(201).json(message);
 };
