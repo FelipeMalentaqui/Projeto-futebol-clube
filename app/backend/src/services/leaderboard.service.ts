@@ -1,28 +1,39 @@
-import { totalGames } from '../utils/tableCalcule';
-// import MatchesModel from '../database/models/Matches';
+/* eslint-disable max-lines-per-function */
+import {
+  totalGoals, goalsOpponent, diferenceGoals,
+  victory, draw, defeat, totalPoints, utilizationTeam,
+} from '../utils/tableCalcule';
+import MatchesModel from '../database/models/Matches';
 import Teams from '../database/models/Teams';
+import { IMatches } from '../interface/IMatches';
+// import { IMatchtesTeam } from '../interface/IMatchesTeam';
 
 const getAll = async () => {
   const teams = await Teams.findAll();
-  console.log(teams);
-  const arrayPromise = teams.map(async (e: Teams) => {
+  const matches = await MatchesModel.findAll();
+
+  const matchsTeam = teams
+    .map((team) => matches
+      .filter((match) => team.id === match.dataValues.homeTeamId));
+
+  const array = matchsTeam.map((e, index) => {
     const obj = {
-      name: e.teamName,
-      // totalPoints: totalPoints(e),
-      totalGames: await totalGames(e.id),
-      // totalVictories: victory(e.id),
-      // totalDraws: 0,
-      // totalLosses: 0,
-      // goalsFavor: totalGoals(e.id),
-      // goalsOwn: 0,
-      // goalsBalance: 0,
-      // efficiency: 0,
+      name: teams[index].teamName,
+      totalPoints: totalPoints(e as unknown as IMatches[]),
+      totalGames: e.length,
+      totalVictories: victory(e as unknown as IMatches[]),
+      totalDraws: draw(e as unknown as IMatches[]),
+      totalLosses: defeat(e as unknown as IMatches[]),
+      goalsFavor: e.reduce(totalGoals, 0),
+      goalsOwn: e.reduce(goalsOpponent, 0),
+      goalsBalance: diferenceGoals(e.reduce(totalGoals, 0), e.reduce(goalsOpponent, 0)),
+      efficiency: utilizationTeam(e as unknown as IMatches[], e as unknown as IMatches[]),
     };
+    // console.log(obj);
     return obj;
   });
-  const resolvePromise = await Promise.all(arrayPromise);
 
-  return resolvePromise;
+  return array;
 };
 
 const useService = { getAll };
