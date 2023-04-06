@@ -34,7 +34,7 @@ const arraySorte = (a: ILeaderboard, b: ILeaderboard): number => {
 const getAll = async () => {
   // const matchsTeam = help();
   const teams = await Teams.findAll();
-  const matches = await MatchesModel.findAll();
+  const matches = await MatchesModel.findAll({ where: { inProgress: false } });
   const matchsTeam = teams.map((team) => matches
     .filter((match) => team.id === match.dataValues.homeTeamId));
   const array = matchsTeam.map((e, index) => {
