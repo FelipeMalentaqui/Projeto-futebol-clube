@@ -5,7 +5,31 @@ import {
 import MatchesModel from '../database/models/Matches';
 import Teams from '../database/models/Teams';
 import { IMatches } from '../interface/IMatches';
+import { ILeaderboard } from '../interface/ILeaderboard';
 // import { IMatchtesTeam } from '../interface/IMatchesTeam';
+
+const arraySorte = (a: ILeaderboard, b: ILeaderboard): number => {
+  if (b.totalPoints - a.totalPoints !== 0) return b.totalPoints - a.totalPoints;
+  // if (a.totalPoints < b.totalPoints) return -1;
+  // if (a.totalPoints === b.totalPoints) return 0;
+
+  if (b.totalVictories - a.totalVictories !== 0) return b.totalVictories - a.totalVictories;
+  // if (a.totalVictories > b.totalVictories) return 1;
+  // if (a.totalVictories < b.totalVictories) return -1;
+  // if (a.totalVictories === b.totalVictories) return 0;
+
+  if (b.goalsBalance - a.goalsBalance !== 0) return b.goalsBalance - a.goalsBalance;
+  // if (a.goalsBalance > b.goalsBalance) return 1;
+  // if (a.goalsBalance < b.goalsBalance) return -1;
+  // if (a.goalsBalance === b.goalsBalance) return 0;
+
+  if (b.goalsFavor - a.goalsFavor !== 0) return b.goalsFavor - a.goalsFavor;
+  // if (a.goalsFavor > b.goalsFavor) return 1;
+  // if (a.goalsFavor < b.goalsFavor) return -1;
+  // if (a.goalsFavor === b.goalsFavor) return 0;
+  // if (b.goalsOwn - a.goalsOwn !== 0) return a.goalsOwn - b.goalsOwn;
+  return 0;
+};
 
 const getAll = async () => {
   // const matchsTeam = help();
@@ -26,7 +50,8 @@ const getAll = async () => {
       efficiency: utilizationTeam(e as unknown as IMatches[], e as unknown as IMatches[]) };
     return obj;
   });
-  return array;
+  // console.log(array);
+  return array.sort(arraySorte);
 };
 
 const useService = { getAll };
