@@ -1,3 +1,4 @@
+import sequelize from 'sequelize';
 import {
   totalGoals, goalsOpponent, diferenceGoals,
   victory, draw, defeat, totalPoints, utilizationTeam,
@@ -54,6 +55,24 @@ const getAll = async () => {
   return array.sort(arraySorte);
 };
 
-const useService = { getAll };
+const test = async () => {
+  const matches = await sequelize.query(`
+    SELECT * FROM matches as m WHERE m.homeTeamGoals > m.awayTeamGoals
+  `);
+  // const matches = await MatchesModel.findAll({
+  //   where: {
+  //     homeTeamGoals: {
+  //       [Op.lt]: { model: Teams, as: 'timeVisitante' },
+  //     },
+  //   },
+  //   include: [
+  //     { model: Teams, as: 'homeTeam' },
+  //     { model: Teams, as: 'timeVisitante' },
+  //   ],
+  // });
+  return matches;
+};
+
+const useService = { getAll, test };
 
 export default useService;

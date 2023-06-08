@@ -43,7 +43,7 @@ Matches.init({
   timestamps: false,
 });
 
-Matches.belongsTo(Teams, { foreignKey: 'awayTeamId', as: 'awayTeam' });
+Matches.belongsTo(Teams, { foreignKey: 'awayTeamId', as: 'timeVisitante' });
 
 Matches.belongsTo(Teams, { foreignKey: 'homeTeamId', as: 'homeTeam' });
 

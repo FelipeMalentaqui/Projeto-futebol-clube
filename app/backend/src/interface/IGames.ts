@@ -1,8 +1,8 @@
-interface IGames {
-  homeTeamId: string;
-  awayTeamId: string;
-  homeTeamGoals: string;
-  awayTeamGoals: string;
-}
+// interface IGames {
+//   homeTeamId: string;
+//   awayTeamId: string;
+//   homeTeamGoals: string;
+//   awayTeamGoals: string;
+// }
 
-export default IGames;
+// export default IGames;
